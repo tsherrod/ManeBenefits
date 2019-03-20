@@ -2,7 +2,7 @@
 session_start();
 
     if($_SESSION['admin'] == FALSE) {
-	    header('Location: home.php')
+	    header('Location: home.php');
 	    exit();
     }
 	
@@ -18,11 +18,19 @@ session_start();
 	
 	if($_SESSION['admin'] == TRUE) {
 	
-      $connection = mysql_connect('localhost','root','');
+		$host = "localhost";
+		$user = "root";
+		$passw = "";
+		$dbName = "adminDB";
+		$connection = new mysqli($host, $user, $pass, $dbName);
 	  
-	  $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+		$hashed_password = password_hash($password, PASSWORD_DEFAULT);
 	  
-	  mysql_query($connection, 'EXEC adminDB.createAdmin($username,$password,$username,$hashed_password)' or die("Something went wrong: " . mysql_error()));
-	
+		$sql = "INSERT INTO adminDB.admins(FirstName, LastName, Username, PasswordHash) VALUES ('$first_name','$last_name','$username','$hashed_password');";
+		$connection->query($sql);
+		
+		$connection->close();
+		header('Location: home.php');
+		exit();
 	}
 ?>

@@ -1,6 +1,4 @@
-<?php session_start(); 
-	$_SESSION['admin'] = FALSE
-?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -21,19 +19,27 @@
 	    if ($_SESSION['admin'] == TRUE) {
 	  ?>
 	  
-	    <form action="admin.php" method="post">
-	      <input type="radio" name="PopulateBuisness" value="PopulateBuisness">Populate Buisness Database <br>
-	      <input type="radio" name="DisplayBuisness" value="DisplayBuisness">Display Buisness Database <br>
-	      <input type="radio" name="NukeBuisness" value="NukeBuisness">Clear Buisness Database <br>
+		<b>Manipulate Buisnesses as Admin:</b> <br><br>
+	    <form action="adminBusiness.php" method="post">
+	      <input type="radio" name="business" value="Populatebusiness">Populate business Database <br>
+	      <input type="radio" name="business" value="Displaybusiness">Display business Database <br>
+	      <input type="radio" name="business" value="Nukebusiness">Clear business Database <br>
 		  <br>
-		  <input type="radio" name="PopulateCard" value="PopulateCard">Populate Card Database <br>
-		  <input type="radio" name="DisplayCard" value="DisplayCard">Display Card Database <br>
-		  <input type="radio" name="NukeCard" value="NukeCard">Clear Card Database <br>
+		  <button type="submit" class="submit"> Submit </button>
+		  <br><br>
+		</form>
+		
+		<b>Manipulate Card Registrations as Admin:</b> <br><br>
+		<form action="adminCard.php" method="post">
+		  <input type="radio" name="card" value="PopulateCard">Populate Card Database <br>
+		  <input type="radio" name="card" value="DisplayCard">Display Card Database <br>
+		  <input type="radio" name="card" value="NukeCard">Clear Card Database <br>
 		  <br>
-		  <input type="radio" name="CreateAdmin" value="CreateAdmin">Create Admin Login <br>
+		  <button type="submit" class="submit"> Submit </button>
 		  <br><br>
 	    </form>
 		
+		<b>Manipulate other Admins as Admin:</b> <br><br>
 		<form action="createAdmin.php" method="post">
 		  <label for="first_name">First Name: </label>
 		  <input type="text" id="first_name" name="first_name" maxlength="12" pattern="^\w[a-zA-Z]{1,12}$" required autocomplete="off">
@@ -53,6 +59,10 @@
 		  
 		  <button type="submit" class="submit"> Submit </button> <br>
 	    </form>
+		<br><br>
+		<form action="adminAdmins.php" method="post">
+		  <button type="submit" class="submit">View Admins</button>
+		</form>
 	  <?php } ?>
 	</body>
 </html>
