@@ -1,3 +1,29 @@
 <resources>
-    <string name="app_name">ManeBenefits</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="categories">
+        <item >Restaurants</item>
+        <item >Apparel</item>
+        <item >Services</item>
+        <item >Activities</item>
+        <item >Healthcare</item>
+        <item >Rentals</item>
+    </string-array>
+    <string-array name="restaurants">
+        <item >Ichiban</item>
+    </string-array>
+    <string-array name="apparel">
+        <item >Ichiban</item>
+    </string-array>
+    <string-array name="services">
+        <item >Ichiban</item>
+    </string-array>
+    <string-array name="activities">
+        <item >Ichiban</item>
+    </string-array>
+    <string-array name="healthcare">
+        <item >Ichiban</item>
+    </string-array>
+    <string-array name="rentals">
+        <item >Ichiban</item>
+    </string-array>
 </resources>
