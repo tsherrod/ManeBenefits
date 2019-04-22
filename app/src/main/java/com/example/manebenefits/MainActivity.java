@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity{
                 try{
                     // CALL GetText method to make post method call
                     GetText();
-                    startActivity(new Intent(MainActivity.this, Categories.class));
+                    //startActivity(new Intent(MainActivity.this, Categories.class));
                 }
                 catch(Exception ex)
                 {
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity{
             catch(Exception ex) {}
         }
         // Show response on activity
-        content.setText( text  );
+        //content.setText( text  );
     }
 
 }
