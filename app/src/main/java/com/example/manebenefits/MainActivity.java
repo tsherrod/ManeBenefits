@@ -52,12 +52,13 @@ public class MainActivity extends AppCompatActivity{
         phoneedit= (EditText)findViewById(R.id.phoneedit);
 
         final Button submit_button = findViewById(R.id.submitbutton);
+        final TextView skip_button = findViewById(R.id.skipbtn);
         submit_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try{
                     // CALL GetText method to make post method call
                     GetText();
-                    //startActivity(new Intent(MainActivity.this, Categories.class));
+                    startActivity(new Intent(MainActivity.this, Categories.class));
                 }
                 catch(Exception ex)
                 {
@@ -65,6 +66,19 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+        skip_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                try{
+                    // CALL GetText method to make post method call
+                    startActivity(new Intent(MainActivity.this, Categories.class));
+                }
+                catch(Exception ex)
+                {
+                    content.setText(" url exeption! " + ex );
+                }
+            }
+        });
+
     }
 
     // Create GetText Method

@@ -28,7 +28,7 @@ public class Categories extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.categories);
 
-        tv1 = findViewById(R.id.tv1);
+        //tv1 = findViewById(R.id.tv1);
         menu_btn = findViewById(R.id.menu);
         menu_btn.setOnClickListener(this);
         restaurant_btn = findViewById(R.id.restaurant_btn);
@@ -53,15 +53,15 @@ public class Categories extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         Intent intent = new Intent();
         if (v.getId()== R.id.menu){
-            //display menu
-            //check if menu is visible
-            //if not, display. if it is- disappear
-            if(tv1.getText().equals("I MADE IT")){
-                tv1.setText("MAMA");
-            }
-            else{
-                tv1.setText("I MADE IT");
-            }
+//            //display menu
+//            //check if menu is visible
+//            //if not, display. if it is- disappear
+//            if(tv1.getText().equals("I MADE IT")){
+//                tv1.setText("MAMA");
+//            }
+//            else{
+//                tv1.setText("I MADE IT");
+//            }
         }
         else {
             switch (v.getId()) {
