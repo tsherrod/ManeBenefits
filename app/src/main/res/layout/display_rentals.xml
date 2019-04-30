@@ -28,12 +28,12 @@
         app:fontFamily="sans-serif"
         app:layout_constraintBottom_toBottomOf="@+id/restaurantBanner"
         app:layout_constraintLeft_toLeftOf="@+id/restaurantBanner"
-        app:layout_constraintRight_toLeftOf="@+id/menu"
+        app:layout_constraintRight_toLeftOf="@+id/menu_Btn"
         app:layout_constraintTop_toBottomOf="@+id/restaurantBanner"
         app:layout_constraintTop_toTopOf="@+id/restaurantBanner" />
 
     <ImageView
-        android:id="@+id/menu"
+        android:id="@+id/menu_Btn"
         android:layout_width="52dp"
         android:layout_height="49dp"
         android:layout_marginTop="16dp"
@@ -58,7 +58,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:entries="@array/restaurants"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

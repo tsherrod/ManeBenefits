@@ -2,13 +2,8 @@ package com.example.manebenefits;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,13 +18,15 @@ public class Categories extends Activity implements View.OnClickListener {
     private TextView tv1;
     private Button restaurant_btn, apparel_btn, services_btn, activities_btn, healthcare_btn, rentals_btn;
     private ImageView menu_btn;
+    public ListView menu_lv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.categories);
 
         //tv1 = findViewById(R.id.tv1);
-        menu_btn = findViewById(R.id.menu);
+        menu_btn = findViewById(R.id.menu_Btn);
         menu_btn.setOnClickListener(this);
         restaurant_btn = findViewById(R.id.restaurant_btn);
         restaurant_btn.setOnClickListener(this);
@@ -43,6 +40,39 @@ public class Categories extends Activity implements View.OnClickListener {
         healthcare_btn.setOnClickListener(this);
         rentals_btn = findViewById(R.id.rentals_btn);
         rentals_btn.setOnClickListener(this);
+        menu_lv = findViewById(R.id.menu_lv);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(Categories.this,
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.categoryMenuItems));
+        menu_lv.setAdapter(myAdapter);
+        menu_lv.bringToFront();
+        menu_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        startActivity(new Intent(Categories.this, MainActivity.class));
+                        break;
+                }
+            }
+        });
+
+        ImageView menuBtn = findViewById(R.id.menu_Btn);
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (menu_lv.getAlpha() == 1){
+                    menu_lv.setAlpha(0);
+                    menu_lv.setEnabled(false);
+                }
+                else{
+                    menu_lv.setAlpha(1);
+                    menu_lv.bringToFront();
+                    restaurant_btn.invalidate();
+                    menu_lv.setEnabled(true);
+                }
+            }
+        });
 
         //ListView listView = (ListView) findViewById(R.id.category_list);
         //listView.setOnItemClickListener(this);
@@ -52,7 +82,7 @@ public class Categories extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        if (v.getId()== R.id.menu){
+        if (v.getId()== R.id.menu_Btn){
 //            //display menu
 //            //check if menu is visible
 //            //if not, display. if it is- disappear

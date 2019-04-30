@@ -28,12 +28,12 @@
         app:fontFamily="sans-serif"
         app:layout_constraintBottom_toBottomOf="@+id/apparelBanner"
         app:layout_constraintLeft_toLeftOf="@+id/apparelBanner"
-        app:layout_constraintRight_toLeftOf="@+id/menu"
+        app:layout_constraintRight_toLeftOf="@+id/menu_Btn"
         app:layout_constraintTop_toBottomOf="@+id/apparelBanner"
         app:layout_constraintTop_toTopOf="@+id/apparelBanner" />
 
     <ImageView
-        android:id="@+id/menu"
+        android:id="@+id/menu_Btn"
         android:layout_width="52dp"
         android:layout_height="49dp"
         android:layout_marginTop="16dp"

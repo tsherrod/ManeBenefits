@@ -11,7 +11,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -25,7 +27,8 @@ import java.net.URL;
 
 public class DisplayRestaurants extends AppCompatActivity {
 
-    ListView listView;
+    String items[] = new String []{"Register", "Categories", "Map"};
+    ListView listView, menu_lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,52 @@ public class DisplayRestaurants extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.restaurant_list);
         listView.setBackgroundColor(getResources().getColor(R.color.lightPurple));
+        listView.bringToFront();
+        menu_lv = findViewById(R.id.menu_lv);
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(DisplayRestaurants.this,
+                android.R.layout.simple_list_item_1,
+                getResources().getStringArray(R.array.menuItems));
+        menu_lv.setAdapter(myAdapter);
 
+        menu_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        startActivity(new Intent(DisplayRestaurants.this, MainActivity.class));
+                        break;
+                    case 1:
+                        startActivity(new Intent(DisplayRestaurants.this, Categories.class));
+                }
+            }
+        });
+
+        ImageView menuBtn = findViewById(R.id.menu_Btn);
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (menu_lv.getAlpha() == 1){
+                    menu_lv.setAlpha(0);
+                    menu_lv.setEnabled(false);
+                    menu_lv.setClickable(false);
+                    listView.bringToFront();
+                }
+                else{
+                    menu_lv.setAlpha(1);
+                    menu_lv.setClickable(true);
+                    menu_lv.setEnabled(true);
+                    menu_lv.bringToFront();
+                }
+            }
+        });
+
+//        Spinner menu_spinner = (Spinner) findViewById(R.id.menu_spinner);
+//
+//        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(DisplayRestaurants.this,
+//                android.R.layout.simple_list_item_1,
+//                getResources().getStringArray(R.array.menuItems));
+//        //myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        menu_spinner.setAdapter(myAdapter);
         downloadJSON("http://10.0.0.191/ManeBenefits/getRestaurants.php");
     }
 
@@ -152,6 +200,7 @@ public class DisplayRestaurants extends AppCompatActivity {
                 ListView lv = findViewById(R.id.restaurant_list);
                 lv.setAlpha(1);
                 lv.setEnabled(true);
+
                 ConstraintLayout RestaurantBanner = findViewById(R.id.restaurantBanner);
                 RestaurantBanner.setAlpha(1);
                 ConstraintLayout DetailsLayout = findViewById(R.id.details);
@@ -161,11 +210,15 @@ public class DisplayRestaurants extends AppCompatActivity {
                     View child = DetailsLayout.getChildAt(i);
                     child.setEnabled(false);
                 }
+                lv.bringToFront();
             }
         });
 
         // check if Instagram account exists
         if (!selectedBusiness.getInstagram().equals("")){
+            instagramBtn.bringToFront();
+            instagramBtn.setEnabled(true);
+            instagramBtn.setAlpha(1);
             instagramBtn.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
