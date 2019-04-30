@@ -27,7 +27,6 @@ import java.net.URL;
 
 public class DisplayRestaurants extends AppCompatActivity {
 
-    String items[] = new String []{"Register", "Categories", "Map"};
     ListView listView, menu_lv;
 
     @Override
@@ -35,15 +34,19 @@ public class DisplayRestaurants extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.display_restaurants);
 
+        // List of Restaurants
         listView = (ListView) findViewById(R.id.restaurant_list);
         listView.setBackgroundColor(getResources().getColor(R.color.lightPurple));
         listView.bringToFront();
+
+        // Menu
         menu_lv = findViewById(R.id.menu_lv);
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(DisplayRestaurants.this,
                 android.R.layout.simple_list_item_1,
                 getResources().getStringArray(R.array.menuItems));
         menu_lv.setAdapter(myAdapter);
 
+        // On click menu list item
         menu_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -57,6 +60,7 @@ public class DisplayRestaurants extends AppCompatActivity {
             }
         });
 
+        // On click menu button
         ImageView menuBtn = findViewById(R.id.menu_Btn);
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,17 +80,18 @@ public class DisplayRestaurants extends AppCompatActivity {
             }
         });
 
-//        Spinner menu_spinner = (Spinner) findViewById(R.id.menu_spinner);
-//
-//        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(DisplayRestaurants.this,
-//                android.R.layout.simple_list_item_1,
-//                getResources().getStringArray(R.array.menuItems));
-//        //myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        menu_spinner.setAdapter(myAdapter);
-        downloadJSON("http://10.0.0.191/ManeBenefits/getRestaurants.php");
+        // Call to getRestaurants.php
+        // IP string stored in app/res/values/strings.xml
+        downloadJSON("http://" + getResources().getString(R.string.IP) +"/ManeBenefits/getRestaurants.php");
     }
 
 
+    /*
+        Function: downloadJSON
+        Input: URL to data
+        Purpose: Make connection to URL, return everything displayed on page (JSON), and display
+                    in a ListView
+    */
     private void downloadJSON(final String urlWebService) {
 
         class DownloadJSON extends AsyncTask<Void, Void, String> {
@@ -97,10 +102,10 @@ public class DisplayRestaurants extends AppCompatActivity {
             }
 
 
+            // After executing, display business in the listView
             @Override
             protected void onPostExecute(final String s) {
                 super.onPostExecute(s);
-                //Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 try {
                     loadIntoListView(s);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -141,6 +146,11 @@ public class DisplayRestaurants extends AppCompatActivity {
 
     }
 
+    /*
+        Function: loadIntoListView
+        Input: string (containing JSON)
+        Purpose: Gets JSON, stores business name into listView
+    */
     private void loadIntoListView(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
         String[] data = new String[jsonArray.length()];
@@ -153,9 +163,11 @@ public class DisplayRestaurants extends AppCompatActivity {
 
     }
 
-    // Display Info
-    // Access when an item is selected from the list of businesses
-    // Will display name, address, discount, facebook, instagram, and website if available
+    /*
+        Function: display_info
+        Input: String json, int position, ListView lv
+        Purpose: Display business details, hide business list ListView
+    */
     private void display_info(String json, int position, ListView lv) throws JSONException{
         // Begin by setting the transparency for the list of restaurants and the banner to invisible
         // Display the details in separate layout
@@ -175,7 +187,7 @@ public class DisplayRestaurants extends AppCompatActivity {
         String[] data = new String[jsonArray.length()];
         JSONObject obj = jsonArray.getJSONObject(position);
 
-        // store details in selectedBusiness class vars for later access
+        // Store details in selectedBusiness class vars for later access
         final SelectedBusiness selectedBusiness = new SelectedBusiness(obj.getString("name"),
                 obj.getString("address"), obj.getString("category"), obj.getString("discount"),
                 obj.getString("facebook"), obj.getString("instagram"), obj.getString("website"));
@@ -193,7 +205,7 @@ public class DisplayRestaurants extends AppCompatActivity {
         ImageButton websiteBtn = findViewById(R.id.websiteBtn);
         ImageButton closeBtn = findViewById(R.id.closeBtn);
 
-        // When Close button is clicked, close details
+        // When Close button is clicked, close details and make List of business visible
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -233,6 +245,7 @@ public class DisplayRestaurants extends AppCompatActivity {
             instagramBtn.setEnabled(false);
             instagramBtn.setAlpha(0);
         }
+
         //check if facebook account exists
         if (!selectedBusiness.getFacebook().equals("")){
             facebookBtn.setOnClickListener(new View.OnClickListener(){
@@ -241,9 +254,8 @@ public class DisplayRestaurants extends AppCompatActivity {
                         String url = selectedBusiness.getFacebook();
                         Uri uri = Uri.parse("fb://facewebmodal/f?href=" + url);
                         Intent i= new Intent(Intent.ACTION_VIEW,uri);
-
-                            i.setPackage("com.facebook.katana");
-                            callFacebook(i, selectedBusiness);
+                        i.setPackage("com.facebook.katana");
+                        callFacebook(i, selectedBusiness);
                 }
             });
         }
@@ -251,6 +263,7 @@ public class DisplayRestaurants extends AppCompatActivity {
             facebookBtn.setEnabled(false);
             facebookBtn.setAlpha(0);
         }
+
         //check if website exists
         if (!selectedBusiness.getWebsite().equals("")){
             websiteBtn.setOnClickListener(new View.OnClickListener(){
@@ -266,15 +279,7 @@ public class DisplayRestaurants extends AppCompatActivity {
             websiteBtn.setAlpha(0);
         }
 
-
-//        nametv.bringToFront();
-//        nametv.setText("HEY");
-//        nametv.setText(obj.getString("name"));
-//        data[position] = obj.getString("name") + " " + obj.getString("address");
-//        name = findViewById(R.id.textView2);
-//        nametv.setText(data[position]);
-
-        // Set views clickable
+        // Set address view clickable
         addresstv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -282,10 +287,13 @@ public class DisplayRestaurants extends AppCompatActivity {
                 showMap(gmmIntentUri);
             }
         });
-
-
     }
 
+    /*
+        Function: showMap
+        Input: URI location (address)
+        Purpose: will open google maps at the address clicked
+     */
     public void showMap(Uri geoLocation) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         //geoLocation = Uri.parse("geo:0,0?q=1600+Amphitheatre+Parkway%2C+CA");
@@ -295,6 +303,11 @@ public class DisplayRestaurants extends AppCompatActivity {
         }
     }
 
+    /*
+        Function: callInstagram
+        Input: Intent i
+        Purpose: Will open instagram app and go to business's page
+     */
     private void callInstagram(Intent i) {
         try {
             startActivity(i);
@@ -304,14 +317,18 @@ public class DisplayRestaurants extends AppCompatActivity {
         }
     }
 
-    //method to get the right URL to use in the intent
+    /*
+        Function: callFacebook
+        Input: Intent i, SelectedBusiness s
+        Purpose: Will open facebook app and go to business's page
+            If facebook app is not downloaded, will go to the webiste
+    */
     public void callFacebook(Intent i, SelectedBusiness s) {
         try {
             startActivity(i);
         } catch (ActivityNotFoundException e) {
             startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse(s.getFacebook())));
-
         }
     }
 }
