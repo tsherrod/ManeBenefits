@@ -46,6 +46,10 @@
             android:name=".DisplayRentals"
             android:label="ManeBenefits">
         </activity>
+        <activity
+            android:name=".ViewCard"
+            android:label="ManeBenefits">
+        </activity>
     </application>
 
 </manifest>

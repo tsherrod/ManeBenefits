@@ -56,6 +56,10 @@ public class DisplayRestaurants extends AppCompatActivity {
                         break;
                     case 1:
                         startActivity(new Intent(DisplayRestaurants.this, Categories.class));
+                        break;
+                    case 3:
+                        startActivity(new Intent (DisplayRestaurants.this, ViewCard.class));
+                        break;
                 }
             }
         });
@@ -82,7 +86,7 @@ public class DisplayRestaurants extends AppCompatActivity {
 
         // Call to getRestaurants.php
         // IP string stored in app/res/values/strings.xml
-        downloadJSON("http://" + getResources().getString(R.string.IP) +"/ManeBenefits/getRestaurants.php");
+        downloadJSON("http://" + getResources().getString(R.string.IP) +"/" + getResources().getString(R.string.AppFolder)+"/getRestaurants.php");
     }
 
 
